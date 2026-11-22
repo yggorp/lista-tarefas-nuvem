@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de tarefas</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 2rem auto; padding: 0 1rem; color: #1b2733; }
+    form { display: flex; gap: .5rem; }
+    input { flex: 1; padding: .5rem; }
+    ul { list-style: none; padding: 0; }
+    .task { display: flex; gap: .5rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid #ddd; }
+    .task span { flex: 1; }
+    .task.done span { text-decoration: line-through; color: #777; }
+    #erro { color: #b4452b; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>Lista de tarefas</h1>
+  <form id="form">
+    <input id="titulo" placeholder="Nova tarefa" aria-label="Título da tarefa">
+    <button>Adicionar</button>
+  </form>
+  <p id="erro" role="alert"></p>
+  <p id="resumo"></p>
+  <ul id="lista"></ul>
+  <script src="utils.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
