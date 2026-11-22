@@ -1,0 +1,50 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Testes automatizados
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes
+        run: npm test
+
+  deploy:
+    name: Deploy no Render
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar o deploy no Render
+        run: curl --fail --silent --show-error -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Verificar se a aplicação respondeu após o deploy
+        run: |
+          for i in $(seq 1 30); do
+            if curl --fail --silent --show-error "${{ secrets.APP_URL }}/health"; then
+              echo
+              echo "Aplicação no ar."
+              exit 0
+            fi
+            echo "Aguardando a aplicação subir (tentativa $i de 30)..."
+            sleep 10
+          done
+          echo "A aplicação não respondeu em /health."
+          exit 1
