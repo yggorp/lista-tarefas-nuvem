@@ -2,7 +2,7 @@
 
 Aplicação web simples (API Express + frontend estático) criada para a Unidade 3 de Desenvolvimento Web para a Nuvem. O foco é o pipeline: a cada `git push` na branch `main`, o GitHub Actions executa os testes e, se todos passarem, dispara o deploy automático no Render.
 
-Aplicação publicada: `COLE AQUI A URL DO RENDER`
+Aplicação publicada: https://lista-tarefas-nuvem-hb5r.onrender.com
 
 ## Funcionalidades
 
